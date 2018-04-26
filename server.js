@@ -29,10 +29,37 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: 'blogposts'
+  database: 'sendgrid'
 });
 con.connect(function(err) {
     if (err) throw err;
     console.log("Yay! Connected!");
+});
+
+
+app.get('/posts/add', (req, res) => {
+	const { title, post } = req.query;
+	const INSERTPOSTQUERY = `INSERT INTO posts (title, post) VALUES ('${title}', '${post}')`;
+	
+	con.query(INSERTPOSTQUERY, (err, results) => {
+		if(err) {
+			return res.send(err)
+		} else {
+			return res.send('Post has been added')
+		}
+	})
+	
+})
+
+app.get('/posts', (req, res) => {
+	con.query('SELECT * FROM posts', (err, results) => {
+		if(err) {
+			return res.send(err)
+		} else {
+			return res.json({
+				data: results
+			})
+		}
+	})
 });
 
