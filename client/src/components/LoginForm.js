@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import {Form, Button} from 'semantic-ui-react';
+import Validator from "validator";
+import PropTypes from 'prop-types';
+// import InlineError from './InlineError';
 
-export default class LoginForm extends Component {
+
+class LoginForm extends Component {
 
 	state = {
 		data: {
@@ -17,10 +21,25 @@ export default class LoginForm extends Component {
 			data: { ...this.state.data, [e.target.name]: e.target.value}
 		});
 
+	onSubmit = () => {
+		const errors = this.validate(this.state.data);
+		this.setState({ errors });
+		if (Object.keys(errors).length === 0) {
+			this.props.submit(this.state.data);
+		}
+	};
+
+	validate = (data) => {
+		const errors = {};
+		if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
+		if (!data.password) errors.password = "Cannot be blank";
+		return errors;
+	}
+
   render() {
 	  const { data } = this.state;
 	return (
-	  <Form>
+	  <Form onSubmit={this.onSubmit}>
 			<Form.Field>
 			  <label htmlFor="email">Email</label>
 			  <input type="email" id="email" name="email" placeholder="example@example.com" value={data.email} onChange={this.onChange} />
@@ -34,3 +53,9 @@ export default class LoginForm extends Component {
 	)
   }
 }
+
+LoginForm.propTypes = {
+	submit: PropTypes.func.isRequired
+}
+
+export default LoginForm;
