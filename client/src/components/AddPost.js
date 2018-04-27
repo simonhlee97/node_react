@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Form, Input, TextArea } from 'semantic-ui-react'
 
 export default class AddPost extends Component {
 
@@ -31,15 +32,21 @@ export default class AddPost extends Component {
 	render() {
 		const { post } = this.state;
 		return (
-
 			<div>
-
 				<h2>Add New Post</h2>
-				<div>
+					<Form>
+						<Form.Field control={Input} label='Title' placeholder='Title of Post' value={post.title} onChange={e => this.setState({ post: { ...post, title: e.target.value}})} />
+
+						<Form.Field control={TextArea} label='Content' placeholder='Your thoughts...' value={post.post} onChange={e => this.setState({ post: { ...post, post: e.target.value}})} />
+
+						<Button onClick={this.addPost}>Submit</Button>
+					</Form>
+
+				{/* <div>
 					<input value={post.title} onChange={e => this.setState({ post: { ...post, title: e.target.value}})} type="text" />
 					<textarea value={post.post} onChange={e => this.setState({ post: { ...post, post: e.target.value}})} />
-					<button onClick={this.addPost}>Submit</button>
-				</div>
+				</div> */}
+
 			</div>
 			
 		);

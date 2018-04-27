@@ -8,9 +8,9 @@ const port = 5000;
 app.listen(port, () => `Server running on port ${port}`);
 console.log('Server is running');
 
-app.get('/api/about', (req, res) => {
-	res.send('hello Simon React App');
-});
+// app.get('/api/about', (req, res) => {
+// 	res.send('hello Simon React App');
+// });
 
 // app.get('/api/example', (req, res) => {
 // 	const example = [
@@ -21,7 +21,6 @@ app.get('/api/about', (req, res) => {
 // 	];
 // 	res.json(example);
 // });
-
 
 // use mysql and connect to db
 var mysql = require('mysql');
@@ -35,7 +34,6 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Yay! Connected!");
 });
-
 
 app.get('/posts/add', (req, res) => {
 	const { title, post } = req.query;

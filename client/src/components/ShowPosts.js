@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
+import { Divider, Segment } from 'semantic-ui-react'
 
+const segmentStyle = {
+	padding: '40px',
+	margin: '35px',
+	border: '2px solid blue'
+};
 export default class ShowPosts extends Component {
 	
 	state={
@@ -19,9 +25,17 @@ export default class ShowPosts extends Component {
 
 	renderPost = ({id, title, post }) => (
 		<div key={id}>
-			<h2 className="title">{ title }</h2>
-			<div className="post">{ post }</div>
-			<hr/>
+			<Segment style={segmentStyle}>
+					<h2>{ title }</h2>
+						<Divider section />
+					<div>{ post }</div>
+			</Segment>
+
+
+			{/* <div key={id}>
+				<h2 className="title">{ title }</h2>
+				<div className="post">{ post }</div>
+			</div> */}
 		</div>
 	);
 

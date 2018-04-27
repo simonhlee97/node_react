@@ -17,7 +17,7 @@ const Main = () => (
           <Link to="/about">About</Link>
         </li>
 		<li>
-          <Link to="/showposts">See All Posts</Link>
+          <Link to="/posts">Posts</Link>
         </li>
 		<li>
           <Link to="/addpost">Add New Post</Link>
@@ -28,71 +28,30 @@ const Main = () => (
       </ul>
 
       <hr />
+	  <br/>
+	  <hr/>
 
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/addpost" component={ AddPost } />
-      <Route path="/showposts" component={ ShowPosts } />
+      {/* <Route path="/showposts" component={ ShowPosts } /> */}
 	  <Route path="/posts" component={Posts} />
       <Route path="/topics" component={Topics} />
     </div>
   </Router>
 );
 
-class Posts extends React.Component {
-
-	state={
-		posts: [],
-		post: {
-			title: 'example title',
-			post: 'lorem ipsum post'
-		}
-	}
-	componentDidMount () {
-		this.getPosts();
-	}
-	
-	getPosts = _ => {
-		fetch('/posts')
-			.then(response => response.json())
-			.then(response => this.setState({ posts: response.data }))
-			.catch(err => console.error(err));
-	}
-
-	addPost = _ => {
-		const { post } = this.state;
-		fetch(`/posts/add?title=${post.title}&post=${post.post}`)
-			.then(this.getPosts)
-			.catch(err => console.error(err))
-	}
-
-	renderPost = ({id, title, post }) => (
-		<div key={id}>
-			<p>{title}: {post}</p>
-		</div>
-	);
-	render() {
-		const {posts, post} = this.state;
-		return (
-			<div>
-				{posts.map(this.renderPost)}
-
-				<h2>Add New Post</h2>
-				<div>
-					<input value={post.title} onChange={e => this.setState({ post: { ...post, title: e.target.value}})} type="text" />
-					<textarea value={post.post} onChange={e => this.setState({ post: { ...post, post: e.target.value}})} />
-					<button onClick={this.addPost}>Submit</button>
-				</div>	
-			</div>
-		);
-	}
-}
+const Posts = () => (
+	<div>
+	  <ShowPosts>Home</ShowPosts>
+	</div>
+);
 
 const Home = () => (
 	<div>
 	  <h2>Home</h2>
 	</div>
-  );
+);
   
 const About = () => (
 	<div>
