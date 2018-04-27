@@ -12,15 +12,15 @@ app.get('/api/about', (req, res) => {
 	res.send('hello Simon React App');
 });
 
-app.get('/api/example', (req, res) => {
-	const example = [
-		{id: 1, name: 'Bill', weight: '180'},
-		{id: 2, name: 'Joe', weight: '160'},
-		{id: 3, name: 'Sean', weight: '170'},
-		{id: 4, name: 'Ty', weight: '190'}
-	];
-	res.json(example);
-});
+// app.get('/api/example', (req, res) => {
+// 	const example = [
+// 		{id: 1, name: 'Bill', weight: '180'},
+// 		{id: 2, name: 'Joe', weight: '160'},
+// 		{id: 3, name: 'Sean', weight: '170'},
+// 		{id: 4, name: 'Ty', weight: '190'}
+// 	];
+// 	res.json(example);
+// });
 
 
 // use mysql and connect to db

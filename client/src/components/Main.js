@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import AddPost from "./AddPost";
+import ShowPosts from "./ShowPosts";
+
 
 // React-Router Routing Basic Example
 
@@ -14,7 +17,10 @@ const Main = () => (
           <Link to="/about">About</Link>
         </li>
 		<li>
-          <Link to="/posts">Posts</Link>
+          <Link to="/showposts">See All Posts</Link>
+        </li>
+		<li>
+          <Link to="/addpost">Add New Post</Link>
         </li>
         <li>
           <Link to="/topics">All Posts</Link>
@@ -25,6 +31,8 @@ const Main = () => (
 
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
+      <Route path="/addpost" component={ AddPost } />
+      <Route path="/showposts" component={ ShowPosts } />
 	  <Route path="/posts" component={Posts} />
       <Route path="/topics" component={Topics} />
     </div>
@@ -34,7 +42,11 @@ const Main = () => (
 class Posts extends React.Component {
 
 	state={
-		posts: []
+		posts: [],
+		post: {
+			title: 'example title',
+			post: 'lorem ipsum post'
+		}
 	}
 	componentDidMount () {
 		this.getPosts();
@@ -49,7 +61,7 @@ class Posts extends React.Component {
 
 	addPost = _ => {
 		const { post } = this.state;
-		fetch(`posts/add?title=${post.title}&body=${post.post}`)
+		fetch(`/posts/add?title=${post.title}&post=${post.post}`)
 			.then(this.getPosts)
 			.catch(err => console.error(err))
 	}
@@ -60,17 +72,17 @@ class Posts extends React.Component {
 		</div>
 	);
 	render() {
-		const {posts} = this.state;
+		const {posts, post} = this.state;
 		return (
 			<div>
 				{posts.map(this.renderPost)}
 
-				{/* <h2>New Post</h2>
-				<form>
+				<h2>Add New Post</h2>
+				<div>
 					<input value={post.title} onChange={e => this.setState({ post: { ...post, title: e.target.value}})} type="text" />
-					<textarea value={post.body} onChange={e => this.setState({ post: { ...post, body: e.target.value}})} />
+					<textarea value={post.post} onChange={e => this.setState({ post: { ...post, post: e.target.value}})} />
 					<button onClick={this.addPost}>Submit</button>
-				</form>	 */}
+				</div>	
 			</div>
 		);
 	}
