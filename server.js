@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const router = express.Router()
 app.use(cors());
 
 const port = 5000;
@@ -35,6 +36,7 @@ con.connect(function(err) {
     console.log("Yay! Connected!");
 });
 
+// Submit a New Post
 app.get('/posts/add', (req, res) => {
 	const { title, post } = req.query;
 	const INSERTPOSTQUERY = `INSERT INTO posts (title, post) VALUES ('${title}', '${post}')`;
@@ -49,6 +51,7 @@ app.get('/posts/add', (req, res) => {
 	
 })
 
+// READ_ALL Show All posts
 app.get('/posts', (req, res) => {
 	con.query('SELECT * FROM posts', (err, results) => {
 		if(err) {
@@ -61,3 +64,47 @@ app.get('/posts', (req, res) => {
 	})
 });
 
+
+
+// READ-ONE post when user clicks on "read more..." 
+app.get('/post/:id', (req, res) => {
+
+	let query = "SELECT * FROM posts WHERE id=?";
+
+	// let table = ["post", req.params.id];
+	// query = mysql.format(query,table);
+	
+	con.query(query, (err, rows) => {
+		if(err) {
+			res.json(
+				{
+					"Error": true, 
+					"Message" : "Error executing MySQL query"
+				}
+			);
+		} else {
+			return res.json(
+				{
+					"Error" : false, 
+					"Message" : "Success", 
+					"Post Content" : rows
+				}
+			);
+		}
+	})
+});
+// router.get('/:id', (req, res) => {
+
+// 	User.findById(req.params.id)
+// 	  .then((result) => {
+// 		res.json(result);
+// 	  })
+// 	  .catch((err) => {
+// 		res.status(404).json({ success: false, msg: `No such user.` });
+// 	  });
+//   });
+router.get('/test/:id', function(req, res, next) {
+	res.render('test', {output: req.params.id});
+});
+
+module.exports = router;
