@@ -28,6 +28,6 @@
     "mysql": "^2.15.0",
     "nodemon": "^1.17.3",
     "pug": "^2.0.3",
-    "react-slideshow-image": "^0.2.2"
+    "react-slideshow-image": "^4.1.1"
   }
 }
